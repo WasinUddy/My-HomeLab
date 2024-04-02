@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: etc-pihole-pv
+  namespace: pihole
+  labels:
+    directory: etc-pihole
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: manual
+  hostPath:
+    path: "<etc-pihole-volume-mount-path>"
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: etc-dnsmasqd-pv
+  namespace: pihole
+  labels:
+    directory: etc-dnsmasqd
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: manual
+  hostPath:
+    path: "<etc-dnsmasqd-volume-mount-path>"
+    type: DirectoryOrCreate

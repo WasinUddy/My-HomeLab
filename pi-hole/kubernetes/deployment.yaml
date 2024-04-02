@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole-deployment
+  namespace: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+        - name: pihole-container
+          image: pihole/pihole:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: "Asia/Bangkok"
+            - name: WEBPASSWORD
+              value: "Uddy31wa?1905"
+          volumeMounts:
+            - name: etc-pihole-vol
+              mountPath: "/etc/pihole"
+            - name: etc-dnsmasqd-vol
+              mountPath: "/etc/dnsmasq.d"
+      volumes:
+        - name: etc-pihole-vol
+          persistentVolumeClaim:
+            claimName: etc-pihole-pvc
+        - name: etc-dnsmasqd-vol
+          persistentVolumeClaim:
+            claimName: etc-dnsmasqd-pvc

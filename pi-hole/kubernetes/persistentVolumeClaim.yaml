@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: etc-pihole-pvc
+  namespace: pihole
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+  selector:
+    matchLabels:
+      directory: etc-pihole
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: etc-dnsmasqd-pvc
+  namespace: pihole
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual
+  selector:
+    matchLabels:
+      directory: etc-dnsmasqd
